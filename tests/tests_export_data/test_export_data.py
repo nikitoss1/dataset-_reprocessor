@@ -35,5 +35,45 @@ class TestExportData(unittest.TestCase):
         exported_df = pd.read_csv(expected_path)
         pd.testing.assert_frame_equal(df, exported_df)
 
+    def test_export_to_tsv(self):
+        test_filename = 'test_export2.tsv'
+        expected_path = os.path.join(self.export_dir, test_filename)
+        
+        df = pd.read_csv(os.path.join(DIR, 'tests/datasets/data_tab.tsv'), sep='\t')
+        
+        ExportData(df, Format.TSV, 'test_export2')
+        
+        self.assertTrue(os.path.exists(expected_path), 
+                       f"Файл {expected_path} не был создан")
+        
+        exported_df = pd.read_csv(expected_path, sep='\t')
+        pd.testing.assert_frame_equal(df, exported_df)
+
+    def test_export_to_txt(self):
+        test_filename = 'test_export3.txt'
+        expected_path = os.path.join(self.export_dir, test_filename)
+        
+        df = pd.read_csv(os.path.join(DIR, 'tests/datasets/data_tilda.txt'), sep='~')
+        
+        ExportData(df, Format.TXT, 'test_export3')
+        
+        self.assertTrue(os.path.exists(expected_path), 
+                       f"Файл {expected_path} не был создан")
+        
+        exported_df = pd.read_csv(expected_path, sep=';')
+        pd.testing.assert_frame_equal(df, exported_df)
+
+    def test_export_to_excel(self):
+        test_filename = 'test_export4.xlsx'
+        expected_path = os.path.join(self.export_dir, test_filename)
+        
+        df = pd.read_excel(os.path.join(DIR, 'tests/datasets/data_excel.xlsx'))
+        
+        ExportData(df, Format.XLSX, 'test_export4')
+        
+        self.assertTrue(os.path.exists(expected_path), 
+                       f"Файл {expected_path} не был создан")
+        
+
 if __name__ == '__main__':
     unittest.main()
