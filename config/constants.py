@@ -1,0 +1,1 @@
+DIR = '/home/nikitoss/Рабочий стол/diploma/'
